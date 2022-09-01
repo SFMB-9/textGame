@@ -64,30 +64,6 @@ void saveGame(){
 
 }
 
-auto newSavefile() {
-    Json savefile;
-    savefile["player"] = {
-        {"name", "Player"},
-        {"hp", 100},
-        {"max_hp", 100},
-        {"inv", {
-            {"item", {
-                {"name", "Item"},
-                {"description", "Description"},
-                {"weight", 1}
-            }}
-        }},
-        {"flags", {
-            {"flag", {
-                {"name", "Flag"},
-                {"description", "Description"},
-                {"complete", false}
-            }}
-        }}
-    };
-    return savefile;
-}
-
 auto readJson(std::string path){
     std::ifstream i(path);
     Json j;
