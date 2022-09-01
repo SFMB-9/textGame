@@ -1,7 +1,8 @@
 {
-    "save3": {
+    "savedata": {
+        "data": false,
         "player": {
-            "name": "",
+            "name": "New game",
             "hp": 0,
             "maxHp": 0,
             "location": "",
@@ -12,6 +13,7 @@
             "sidequests": []
         },
         "settings": {
+            "slotColor": "blue",
             "textType": false,
             "coloredElements": false
         },

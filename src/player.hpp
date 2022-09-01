@@ -3,11 +3,16 @@
 
 #include <iostream>
 #include "inventory.hpp"
+#include "slot.hpp"
 
 class Player {
     public:
-        std::string name;
+        /*Constructors*/
+        Player(Slot slot){
+            name = slot.savefile["name"];
+        }
     private:
+        std::string name;
         float hp;
         float max_hp;
         Inventory inv;

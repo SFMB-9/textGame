@@ -1,10 +1,11 @@
 {
-    "save1": {
+    "savedata": {
+        "data": false,
         "player": {
-            "name": "",
+            "name": "New game",
             "hp": 0,
             "maxHp": 0,
-            "location": "",
+            "location": "park",
             "inventory": []
         },
         "story": {
@@ -12,6 +13,7 @@
             "sidequests": []
         },
         "settings": {
+            "slotColor": "red",
             "textType": false,
             "coloredElements": false
         },

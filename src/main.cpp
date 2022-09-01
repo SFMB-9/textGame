@@ -7,35 +7,13 @@
 #include "json.hpp"
 #include "player.hpp"
 #include "slot.hpp"
+#include "style.hpp"
+#include "inventory.hpp"
 
 using Json = nlohmann::json;
 
-#define CLEAR "\033[2J\033[1;1H"
-#define RESET "\033[0m"
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define YELLOW "\033[33m"
-#define BLUE "\033[34m"
-#define MAGENTA "\033[35m"
-#define CYAN "\033[36m"
-#define WHITE "\033[37m"
-#define BLACK "\033[30m"
-#define BOLD "\033[1m"
-#define BOLD_RED "\033[1;31m"
-#define BOLD_GREEN "\033[1;32m"
-#define BOLD_YELLOW "\033[1;33m"
-#define BOLD_BLUE "\033[1;34m"
-#define BOLD_MAGENTA "\033[1;35m"
-#define BOLD_CYAN "\033[1;36m"
-#define BOLD_WHITE "\033[1;37m"
-#define BOLD_BLACK "\033[1;30m"
-#define UNDERLINE "\033[4m"
-#define REVERSE "\033[7m"
-#define HIDE "\033[8m"
-
 /*New Game*/
 void newGame(){
-    std::cout << "Welcome to the text game!";
     //Build slots
     Slot slot1 = Slot("savefiles/save1.json");
     std::cout << "\nslot1 built";
@@ -44,16 +22,26 @@ void newGame(){
     Slot slot3 = Slot("savefiles/save3.json");
     std::cout << "\nslot3 built";
     
-    std::cout << "\nNew Game";
+    std::cout << CLEAR;
     std::cout << "\nSelect a save slot:";
-    std::cout << slot1 << std::endl;
-    std::cout << "\n1. Save 1";
-    std::cout << "\n2. Save 2";
-    std::cout << "\n3. Save 3";
+    std::cout << "\n" << slot1;
+    std::cout << "\n" << slot2;
+    std::cout << "\n" << slot3;
     std::cout << "\n> ";
     int choice;
     std::cin >> choice;
     std::cout << "Welcome";
+}
+
+void eraseSlot(int slot) {
+    std::string slot_path = "savefiles/save" + std::to_string(slot) + ".json";
+    std::ofstream savefile_stream(slot_path);
+    Json savefile;
+    savefile["savedata"]["data"] = false;
+    savefile["savedata"]["player"]["name"] = "Empty";
+    savefile["savedata"]["player"]["location"] = "Empty";
+    savefile["savedata"]["settings"]["slotColor"] = "white";
+    savefile_stream << savefile;
 }
 
 void loadGame(){
@@ -87,14 +75,6 @@ void menu() {
         newGame();
 
     } else if(choice == 2){
-        std::cout << "Load Game";
-        std::cout << "\nSelect a save slot:";
-        std::cout << u8"\n\u2554 \u2557\n 1. Save 1";
-        std::cout << "\n╔═══════╗\n║2. Save 2║\n╚════════╝";
-        std::cout << "\n╔═══════╗\n║3. Save 3║\n╚════════╝";
-        std::cout << "\n> ";
-        int choice;
-        std::cin >> choice;
 
     } else if(choice == 3){
         std::cout << "\nQuit";
