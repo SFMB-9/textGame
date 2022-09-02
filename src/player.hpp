@@ -15,7 +15,7 @@ class Player {
         std::string name;
         float hp;
         float max_hp;
-        Inventory inv;
+        //Inventory inventory;
 };
 
 #endif // _PLAYER_HPP_
