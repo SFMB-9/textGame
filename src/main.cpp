@@ -33,16 +33,6 @@ void newGame(){
     std::cout << "Welcome";
 }
 
-void eraseSlot(int slot) {
-    std::string slot_path = "savefiles/save" + std::to_string(slot) + ".json";
-    std::ofstream savefile_stream(slot_path);
-    Json savefile;
-    savefile["savedata"]["data"] = false;
-    savefile["savedata"]["player"]["name"] = "Empty";
-    savefile["savedata"]["player"]["location"] = "Empty";
-    savefile["savedata"]["settings"]["slotColor"] = "white";
-    savefile_stream << savefile;
-}
 
 void loadGame(){
 
