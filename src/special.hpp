@@ -22,8 +22,8 @@
 
 #define BOX2_ULC "\311" // ╔
 #define BOX2_URC "\273" // ╗
-#define BOX2_LLC "\315" // ╚
-#define BOX2_LRC "\277" // ╝
+#define BOX2_LLC "\310" // ╚
+#define BOX2_LRC "\274" // ╝
 #define BOX2_HLINE "\315" // ═
 #define BOX2_VLINE "\272" // ║
 #define BOX2_CROSS "\253" // ╬
