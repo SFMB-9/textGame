@@ -145,67 +145,6 @@ json newSavefile() {
     return savefile;
 }
 
-void draw(){
-    bool drawing = true;
-    while(drawing){
-        std::cout << CLEAR;
-        std::cout << "1. Box of n * m";
-        std::cout << "\n2. Box of n * m with border";
-        std::cout << "\n3. Box factory (Experimental)";
-        std::cout << "\n> ";
-        int command;
-        std::cin >> command;
-        if(command == 1){
-            std::cout << "\nWidth: ";
-            int width;
-            std::cin >> width;
-            std::cout << "Height: ";
-            int height;
-            std::cin >> height;
-            //std::cout << CLEAR;
-            std::cout << box({{"dimensions", json::array({width, height})}});
-            std::cout << "Press enter to continue";
-            std::cin.ignore();
-        } else if(command == 2){
-            std::cout << "\nWidth: ";
-            int width;
-            std::cin >> width;
-            std::cout << "Height: ";
-            int height;
-            std::cin >> height;
-            std::cout << CLEAR;
-            std::cout << box({{"dimensions", {width, height}}, {"border", true}});
-            std::cout << "Press enter to continue";
-            std::cin.ignore();
-            std::cin.ignore();
-        } else if(command == 3){
-            std::cout << "\nWidth: ";
-            int width;
-            std::cin >> width;
-            std::cout << "Height: ";
-            int height;
-            std::cin >> height;
-            std::cout << "Border (y/n): ";
-            std::string border;
-            std::cin >> border;
-            std::cout << "Color: ";
-            std::string color;
-            std::cin >> color;
-            std::cout << CLEAR;
-            std::cout << box({{"color",color},{"dimensions", {width, height}},{"border", border == "y"}});
-            std::cout << "Press enter to continue";
-            std::cin.ignore();
-            std::cin.ignore();
-        } else {
-            std::cout << "\nInvalid choice";
-            std::cout << "Press enter to continue";
-            std::cin.ignore();
-            std::cin.ignore();
-            drawing = false;
-        }
-    }
-}
-
 int main() {
     //std::cout << CLEAR;
     //menu();
