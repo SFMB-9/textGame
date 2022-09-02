@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "draw.hpp"
 #include "inventory.hpp"
 #include "json.hpp"
 #include "player.hpp"
@@ -30,32 +31,39 @@ void eraseSlot(int slot) {
     savefile["savedata"]["gameStats"]["completionPercentage"] = 0;
     savefile_stream << savefile;
 }
-
 /*New Game*/
 void newGame(){
     //Build slots
-    Slot slot1 = Slot("savefiles/save1.json");
-    std::cout << "\nslot1 built";
-    Slot slot2 = Slot("savefiles/save2.json");
-    std::cout << "\nslot2 built";
-    Slot slot3 = Slot("savefiles/save3.json");
-    std::cout << "\nslot3 built";
-    
+    std::vector<Slot> slots;
+    for(int i = 1; i <= 3; i++){
+        std::string slot_path = "savefiles/save" + std::to_string(i) + ".json";
+        std::ifstream savefile_stream(slot_path);
+        Json savefile;
+        savefile_stream >> savefile;
+        if(savefile["savedata"]["data"] == false){
+            slots.push_back(Slot(slot_path));
+        }
+    }
     std::cout << CLEAR;
     std::cout << "\nSelect a save slot:";
-    std::cout << "\n" << slot1;
-    std::cout << "\n" << slot2;
-    std::cout << "\n" << slot3;
+    std::vector<std::string> slotBoxes;
+    for(int i = 0; i < slots.size(); i++){
+        std::stringstream st;
+        st << slots[i];
+        slotBoxes.push_back(st.str());
+    }
+    //Horizontal menu
+    std::cout << sideBySideBoxes(slotBoxes);
     std::cout << "\n> ";
     int slotChoice;
     std::cin >> slotChoice;
     Slot *selectedSlot;
     if(slotChoice == 1){
-        selectedSlot = &slot1;
+        selectedSlot = &slots[0];
     } else if(slotChoice == 2){
-        selectedSlot = &slot2;
+        selectedSlot = &slots[1];
     } else if(slotChoice == 3){
-        selectedSlot = &slot3;
+        selectedSlot = &slots[2];
     } else {
         std::cout << "\nInvalid choice";
         return;
@@ -79,27 +87,21 @@ void newGame(){
     }
     std::cout << "Welcome";
 }
-
-
 void loadGame(){
 
 }
-
 void saveGame(){
 
 }
-
 auto readJson(std::string path){
     std::ifstream i(path);
     Json j;
     i >> j;
     std::cout << j << "\n";
 }
-
 void printJson(Json json){
     std::cout << json.dump(4) << "\n";
 }
-
 void menu() {
     std::cout << BOLD_CYAN << "STORIX" << RESET;
     std::cout << "\nNew Game";
@@ -119,7 +121,6 @@ void menu() {
         std::cout << "\nInvalid Choice";
     }
 }
-
 json newSavefile() {
     json savefile = {
         {"savedata", {
@@ -144,11 +145,8 @@ json newSavefile() {
     };
     return savefile;
 }
-
 int main() {
-    //std::cout << CLEAR;
-    //menu();
-    //return 0;
-    draw();
-
+    std::cout << CLEAR;
+    menu();
+    return 0;
 }
