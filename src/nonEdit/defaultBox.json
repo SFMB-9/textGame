@@ -1,0 +1,15 @@
+{
+    "color": "red",
+    "content": "hello\nworld",
+    "doubleLine": false,
+    "dimensions": {
+        "height": 1,
+        "width": 1
+    },
+    "padding": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+    }
+}
