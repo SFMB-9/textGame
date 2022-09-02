@@ -19,9 +19,6 @@ class Inventory {
         void setWeight(int weight);
         int getMaxWeight();
         void setMaxWeight(int maxWeight);
-        //void setPlayer(Player player);
-        //Player getPlayer();
-
 };
 
 #endif // _INVENTORY_HPP_
