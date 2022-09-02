@@ -18,15 +18,21 @@ class Slot {
             savefile_stream >> savefile;
             playerName = savefile["savedata"]["player"]["name"];
             playerLocation = savefile["savedata"]["player"]["location"];
+            slotColor = savefile["savedata"]["settings"]["slotColor"];
         }
         json savefile;
+        /*Methods*/
+        void print(){
+            std::cout << "\n";
+        }
     private:
         friend std::ostream& operator<<(std::ostream& os, const Slot& slot);
         std::string playerName;
         std::string playerLocation;
+        std::string slotColor;
 };
 std::ostream& operator <<(std::ostream& os, const Slot& slot) {
-    os << color(box(slot.playerName,2),slot.savefile["savedata"]["settings"]["slotColor"]);
+    os << box({slot.playerName, slot.playerLocation});
     return os;
 }
 
