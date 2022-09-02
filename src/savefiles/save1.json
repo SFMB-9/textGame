@@ -1,6 +1,6 @@
 {
     "savedata": {
-        "data": false,
+        "data": true,
         "player": {
             "name": "New game",
             "hp": 0,
