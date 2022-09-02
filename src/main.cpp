@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "anim.hpp"
 #include "draw.hpp"
 #include "inventory.hpp"
 #include "json.hpp"
@@ -31,6 +32,7 @@ void eraseSlot(int slot) {
     savefile["savedata"]["gameStats"]["completionPercentage"] = 0;
     savefile_stream << savefile;
 }
+
 /*New Game*/
 void newGame(){
     //Build slots
@@ -87,23 +89,28 @@ void newGame(){
     }
     std::cout << "Welcome";
 }
+
 void loadGame(){
 
 }
+
 void saveGame(){
 
 }
+
 auto readJson(std::string path){
     std::ifstream i(path);
     Json j;
     i >> j;
     std::cout << j << "\n";
 }
+
 void printJson(Json json){
     std::cout << json.dump(4) << "\n";
 }
+
 void menu() {
-    std::cout << BOLD_CYAN << "STORIX" << RESET;
+    std::cout << BOLD_CYAN << "THE GAME" << RESET;
     std::cout << "\nNew Game";
     std::cout << "\n2. Load Game";
     std::cout << "\n3. Quit";
@@ -121,6 +128,7 @@ void menu() {
         std::cout << "\nInvalid Choice";
     }
 }
+
 json newSavefile() {
     json savefile = {
         {"savedata", {
@@ -145,8 +153,13 @@ json newSavefile() {
     };
     return savefile;
 }
+
 int main() {
     std::cout << CLEAR;
+    std::cout << "P r e s s   e n t e r   t o  p l a y . . .";
+    std::cin.get();
+    animatedLogo();
     menu();
+
     return 0;
 }
