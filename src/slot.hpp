@@ -32,7 +32,7 @@ class Slot {
         std::string slotColor;
 };
 std::ostream& operator <<(std::ostream& os, const Slot& slot) {
-    os << box({slot.playerName, slot.playerLocation});
+    os << box({{"color",slot.slotColor},{"content",(slot.playerName)},{"padding",{{"top",0},{"bottom",0},{"left",2},{"right",2}}}});
     return os;
 }
 
