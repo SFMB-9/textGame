@@ -26,7 +26,7 @@ class Slot {
         json savefile;
         /*Methods*/
         void print(){
-            std::cout << box({{"color", slotColor}, {"content",(playerName + "\n" + playerLocation)}});
+            std::cout << box({{"onNewLine", true},{"color", slotColor}, {"content",(playerName + "\n" + playerLocation)}, {"padding", {{"top",1},{"bottom",2},{"left",1},{"right",2}}}});
         }
         void setPlayerName(std::string name){
             playerName = name;

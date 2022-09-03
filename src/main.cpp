@@ -32,7 +32,7 @@ void newGame(Slot slot){
     std::string name;
     std::cin >> name;
     std::cout << CLEAR_LAST;
-    std::cout << CLEAR_LAST;
+    //std::cout << CLEAR_LAST;
     std::cout << "Starring " << GREEN << name << RESET << "!";
     //Set name
     slot.setPlayerName(name);
@@ -150,6 +150,8 @@ int fileHandler(){
                     std::cout << "\nAborting...";
                     continue;
                 }
+            } else {
+                loadGame(*selectedSlot);
             }
         }
     }
