@@ -1,6 +1,5 @@
 {
     "savedata": {
-        "tag": 3,
         "data": false,
         "gameStats": {
             "completeQuests": 0,
@@ -17,6 +16,7 @@
         },
         "settings": {
             "slotColor": "white"
-        }
+        },
+        "tag": 1
     }
 }
