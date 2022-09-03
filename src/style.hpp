@@ -2,7 +2,10 @@
 #define _STYLE_HPP_
 
 #define CLEAR "\033[2J\033[1;1H"
+#define CLEAR_LAST "\033[1A\033[2K"
 #define RESET "\033[0m"
+
+#define NEWLINE "\n"
 
 /*format*/
 #define UNDERLINE "\033[4m"

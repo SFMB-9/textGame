@@ -38,26 +38,14 @@ std::string colorcode(std::string color) {
 std::string box(json style) {
     std::string box = "";
     /*Extract style*/
+    bool onNewLine;
+    if (style.find("onNewLine") != style.end())
+        onNewLine = style["onNewLine"];
+    int offset;
+    if (style.find("offset") != style.end())
+        offset = style["offset"];
     std::string color = (style.find("color") != style.end()) ? style["color"] : "";
-    std::string backgroundColor = (style.find("backgroundColor") != style.end()) ? style["backgroundColor"]: "";
     std::string content = (style.find("content") != style.end()) ? style["content"] : "";
-    std::string borderColor = (style.find("borderColor") != style.end()) ? style["borderColor"] : "";
-    
-    bool doubleLine;
-    if (style.find("doubleLine") != style.end())
-        doubleLine = style["doubleLine"];
-
-    std::vector<int> dimensions;
-    if (style.find("dimensions") != style.end()) { 
-        dimensions.push_back(style["dimensions"]["width"]);
-        dimensions.push_back(style["dimensions"]["height"]);
-        //std::cout << "dimensions set"; //debug
-    } else {
-        dimensions.push_back(0);
-        dimensions.push_back(0);
-        //std::cout << "dimensions not set"; //debug
-    }
-
     std::vector<int> padding;
     if (style.find("padding") != style.end()) {
         padding.push_back(style["padding"]["top"]);
@@ -72,13 +60,26 @@ std::string box(json style) {
         padding.push_back(0);
         //std::cout << "padding not set"; //debug
     }
-
+    bool doubleLine;
+    if (style.find("doubleLine") != style.end())
+        doubleLine = style["doubleLine"];
+    std::string borderColor = (style.find("borderColor") != style.end()) ? style["borderColor"] : "";
+    std::string backgroundColor = (style.find("backgroundColor") != style.end()) ? style["backgroundColor"]: "";
+    std::vector<int> dimensions;
+    if (style.find("dimensions") != style.end()) { 
+        dimensions.push_back(style["dimensions"]["width"]);
+        dimensions.push_back(style["dimensions"]["height"]);
+        //std::cout << "dimensions set"; //debug
+    } else {
+        dimensions.push_back(0);
+        dimensions.push_back(0);
+        //std::cout << "dimensions not set"; //debug
+    }
     std::vector<std::string> boxPieces = {
         BOX_ULC,BOX_HLINE,BOX_URC,
         BOX_VLINE, " " ,BOX_VLINE,
         BOX_LLC,BOX_HLINE,BOX_LRC
     };
-
     if(doubleLine) {
         boxPieces = {
             BOX2_ULC,BOX2_HLINE,BOX2_URC,
@@ -116,7 +117,7 @@ std::string box(json style) {
     int boxHeight;
     if(dimensions[1] >= (lines.size()+padding[0]+padding[2])) {
         boxHeight = dimensions[1]-padding[0]-padding[2];
-        std::cout << "Box is tall enough";
+        //std::cout << "Box is tall enough";
     } else {
         boxHeight = lines.size();
         //std::cout << "Box will be stretched vertically to fit content"; //debug
@@ -124,31 +125,35 @@ std::string box(json style) {
 
     /*Build box*/
     color = colorcode(color);
-    std::string boxTop = "\n"+color + boxPieces[0] + std::string(boxWidth, boxPieces[1][0]) + boxPieces[2] + "\033[0m\n";
+    std::string offsetString = (offset > 0) ? std::string(offset, ' ') : "";
+    std::string ifNewLine = (onNewLine) ? "\n" : "";
     std::string boxBody = "";
     int tempBoxHeight = boxHeight;
-    //Top padding
+    //TOP OF BOX
+    std::string boxTop = ifNewLine + offsetString + color + boxPieces[0] + std::string(boxWidth, boxPieces[1][0]) + boxPieces[2] + "\033[0m\n";
+    //      Top padding
     for (int i = 0; i < padding[0]; i++) {
-        boxBody += color + boxPieces[3] + std::string(boxWidth, ' ') + boxPieces[5] + "\033[0m\n";
+        boxBody += offsetString + color + boxPieces[3] + std::string(boxWidth, ' ') + boxPieces[5] + "\033[0m\n";
         tempBoxHeight--;
     }
-    //Content
+    //BOX BODY - content
     for( auto line : lines ) {
-        std::string boxLine = color + boxPieces[3] + std::string(padding[3], ' ') + line + std::string(contentLength-(line.length()),' ') + std::string(padding[1], ' ') + boxPieces[5] + "\033[0m\n";
+        std::string boxLine = offsetString + color + boxPieces[3] + std::string(padding[3], ' ') + line + std::string(contentLength-(line.length()),' ') + std::string(padding[1], ' ') + boxPieces[5] + "\033[0m\n";
         boxBody += boxLine;
         tempBoxHeight--;
     }
-    //Bottom padding
+    //      Bottom padding
     for (int i = 0; i < padding[2]; i++) {
-        boxBody += color + boxPieces[3] + std::string(boxWidth, ' ') + boxPieces[5] + "\033[0m\n";
+        boxBody += offsetString + color + boxPieces[3] + std::string(boxWidth, ' ') + boxPieces[5] + "\033[0m\n";
         tempBoxHeight--;
     }
-    //By default, extra lines are placed after the bottom padding
-    //TODO: Add option to place extra lines before top padding or split them evenly
+    //      By default, extra lines are placed after the bottom padding
+    //      TODO: Add option to place extra lines before top padding or split them evenly
     for (int i = 0; i < tempBoxHeight; i++) {
-        boxBody += color + boxPieces[3] + std::string(boxWidth, ' ') + boxPieces[5] + "\033[0m\n";
+        boxBody += offsetString + color + boxPieces[3] + std::string(boxWidth, ' ') + boxPieces[5] + "\033[0m\n";
     }
-    std::string boxBottom = color + boxPieces[6] + std::string(boxWidth, boxPieces[7][0]) + boxPieces[8] + "\033[0m";
+    //BOTTOM OF BOX
+    std::string boxBottom = offsetString + color + boxPieces[6] + std::string(boxWidth, boxPieces[7][0]) + boxPieces[8] + "\033[0m";
     box = boxTop + boxBody + boxBottom;
     
     return box;

@@ -16,23 +16,35 @@ class Slot {
         Slot(std::string slot_path){ 
             std::ifstream savefile_stream(slot_path);
             savefile_stream >> savefile;
+            tag = savefile["savedata"]["tag"];
             playerName = savefile["savedata"]["player"]["name"];
             playerLocation = savefile["savedata"]["player"]["location"];
             slotColor = savefile["savedata"]["settings"]["slotColor"];
+            savefile_stream.close();
         }
         json savefile;
         /*Methods*/
         void print(){
-            std::cout << "\n";
+            std::cout << box({{"color", slotColor}, {"content",(playerName + "\n" + playerLocation)}});
+        }
+        void setPlayerName(std::string name){
+            savefile["savedata"]["player"]["name"] = name;
+            playerName = name;
+        }
+        void save(){
+            std::ofstream savefile_stream("../storage/save"+std::to_string(tag)+".json");
+            savefile_stream << savefile;
         }
     private:
-        friend std::ostream& operator<<(std::ostream& os, const Slot& slot);
+        int tag;
         std::string playerName;
         std::string playerLocation;
         std::string slotColor;
+        friend std::ostream& operator<<(std::ostream& os, const Slot& slot);
 };
 std::ostream& operator <<(std::ostream& os, const Slot& slot) {
-    os << box({{"color",slot.slotColor},{"content",(slot.playerName)},{"padding",{{"top",0},{"bottom",0},{"left",2},{"right",2}}}});
+    os << box({{"onNewLine",true},{"color", slot.slotColor},{"content",slot.playerName}});
+    //os << box({{"color",slot.slotColor},{"content",(slot.playerName)},{"padding",{{"top",0},{"bottom",0},{"left",2},{"right",2}}}});
     return os;
 }
 

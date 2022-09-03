@@ -1,0 +1,22 @@
+{
+    "savedata": {
+        "tag": 2,
+        "data": false,
+        "gameStats": {
+            "completeQuests": 0,
+            "completionPercentage": 0,
+            "deaths": 0,
+            "failedQuests": 0,
+            "kills": 0,
+            "playTime": 0
+        },
+        "player": {
+            "inventory": null,
+            "location": "none",
+            "name": "New game"
+        },
+        "settings": {
+            "slotColor": "white"
+        }
+    }
+}
