@@ -15,24 +15,10 @@
 
 using Json = nlohmann::json;
 
-void eraseSlot(int slotTag) {
-    std::string slot_path = "savefiles/save" + std::to_string(slotTag) + ".json";
-    std::ofstream savefile_stream(slot_path);
-    Json savefile;  
-
-    savefile["savedata"]["tag"] = slotTag;
-    savefile["savedata"]["data"] = false;
-    savefile["savedata"]["player"]["name"] = "New game";
-    savefile["savedata"]["player"]["location"] = "none";
-    savefile["savedata"]["player"]["inventory"] = {};
-    savefile["savedata"]["settings"]["slotColor"] = "white";
-    savefile["savedata"]["gameStats"]["playTime"] = 0;
-    savefile["savedata"]["gameStats"]["deaths"] = 0;
-    savefile["savedata"]["gameStats"]["kills"] = 0;
-    savefile["savedata"]["gameStats"]["completeQuests"] = 0;
-    savefile["savedata"]["gameStats"]["failedQuests"] = 0;
-    savefile["savedata"]["gameStats"]["completionPercentage"] = 0;
-    savefile_stream << savefile;
+void loadGame(Slot slot){
+    std::cout << "Press enter to continue...";
+    std::cin.ignore();
+    std::cin.get();
 }
 
 /*New Game*/
@@ -42,18 +28,19 @@ void newGame(Slot slot){
     /*Intro*/
     std::cout << CLEAR;
     std::cout << "The beginning of a new adventure...";
-    std::cout << "\nWhat is your name?";
-    std::cout << "\n> ";
+    std::cout << "\nWhat is your name?\n> ";
     std::string name;
     std::cin >> name;
-    std::cout << "Starring " << name << "!";
+    std::cout << CLEAR_LAST;
+    //std::cout << CLEAR_LAST;
+    std::cout << "Starring " << GREEN << name << RESET << "!";
     //Set name
     slot.setPlayerName(name);
-    std::cout << "Would you like to save your progress?";
+    std::cout << "\nWould you like to save your progress?";
     std::cout << "\n> ";
     std::string save;
     std::cin >> save;
-    if (save == "yes") {
+    if (save == "yes"||save == "y"||save == "1") {
         slot.save();
     }
     std::cout << slot;
@@ -86,6 +73,8 @@ int fileHandler(){
         } else if(choice == 2){
             isNewGame = false;
         } else if(choice == 3){
+            std::cout << "Settings";
+        } else if(choice == 4){
             std::cout << CLEAR;
             inGame = false;
             return -1;
@@ -113,7 +102,7 @@ int fileHandler(){
             slotBoxes.push_back(st.str());
         }
         //Display horizontal menu
-        std::cout << sideBySideBoxes(slotBoxes);
+        std::cout << NEWLINE << sideBySideBoxes(slotBoxes);
         std::cout << "\n> ";
         std::string slotChoice;
         std::cin >> slotChoice;
@@ -126,14 +115,13 @@ int fileHandler(){
             selectedSlot = &slots[2];
         } else if(slotChoice == "q") {
             std::cout << CLEAR;
-            return -1;
+            continue;
         } else {
             std::cout << CLEAR;
             std::cout << "\nInvalid Choice";
             continue;
         }
-        //std::cout << "\n" << selectedSlot->savefile["savedata"]["data"]; //Debug
-
+        /*Slot selected*/
         //Attempt new game
         if(isNewGame){
             if (selectedSlot->savefile["savedata"]["data"]){
@@ -145,30 +133,32 @@ int fileHandler(){
                 std::cin >> choice;
                 if(choice == "y"){
                     std::cout << "\nOverwriting...";
-                    eraseSlot(stoi(slotChoice));
 
                 } else {
                     std::cout << "\nAborting...";
                     continue;
                 }
             }
+            selectedSlot->erase();; //Erase slot (potentially corrupted) tabula rasa
             newGame(*selectedSlot);
         //Attempt load game
         } else {
             if (!selectedSlot->savefile["savedata"]["data"]){
                 std::cout << "\nThis slot is empty";
-                std::cout << "Would you like to start a new game? (y/n)";
+                std::cout << "\nWould you like to start a new game? " << YELLOW << "(y/n)" << RESET;
                 std::cout << "\n> ";
                 std::string choice;
                 std::cin >> choice;
                 if(choice == "y"){
                     std::cout << "\nStarting new game...";
-                    eraseSlot(stoi(slotChoice));
+                    selectedSlot->erase();
                     continue;
                 } else {
                     std::cout << "\nAborting...";
                     continue;
                 }
+            } else {
+                loadGame(*selectedSlot);
             }
         }
     }
@@ -200,7 +190,7 @@ int main() {
         if(fileHandler() == -1) {
             play = false;
         }
-        std::cout << BOLD <<"T h a n k s   f o r   p l a y i n g " << HEART << RESET;
+        std::cout <<"T h a n k s   f o r   p l a y i n g " << BOLD_RED << HEART << RESET;
     }
 
     return 0;

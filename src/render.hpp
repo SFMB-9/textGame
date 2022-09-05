@@ -13,28 +13,6 @@
 
 using json = nlohmann::json;
 
-std::string colorcode(std::string color) {
-    if(color == "red") {
-        return "\033[31m";
-    } else if(color == "green") {
-        return "\033[32m";
-    } else if(color == "yellow") {
-        return "\033[33m";
-    } else if(color == "blue") {
-        return "\033[34m";
-    } else if(color == "magenta") {
-        return "\033[35m";
-    } else if(color == "cyan") {
-        return "\033[36m";
-    } else if(color == "white") {
-        return "\033[37m";
-    } else if(color == "black") {
-        return "\033[30m";
-    } else {
-        return "";
-    }
-}
-
 std::string box(json style) {
     std::string box = "";
     /*Extract style*/
@@ -158,7 +136,6 @@ std::string box(json style) {
     
     return box;
 }
-
 std::string sideBySideBoxes(std::vector<std::string> boxes) {
     std::string sideBySide = "";
     //Slicing boxes into lines
@@ -181,8 +158,6 @@ std::string sideBySideBoxes(std::vector<std::string> boxes) {
     }
     return sideBySide;
 }
-
-
 void print(std::string string){
     std::cout << string << "\n";
 }
