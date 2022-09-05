@@ -58,7 +58,7 @@ void newGame(Slot slot){
     }
     std::cout << slot;
     //std::cout << CLEAR;
-    loadGame(slot)
+    //loadGame(slot)
 }
 
 void loadGame(Slot slot){
