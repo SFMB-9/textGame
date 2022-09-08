@@ -44,8 +44,15 @@ void newGame(Slot slot){
     if (save == "yes"||save == "y"||save == "1") {
         slot.save();
     }
-    std::cout << "HERE";
-    loadGame(slot);
+    std::cout << slot;
+    //std::cout << CLEAR;
+    //loadGame(slot)
+}
+
+void loadGame(Slot slot){
+    std::cout << "GAME EXITED";
+    std::cout << "press enter to continue";
+    std::cin.ignore();
 }
 
 int fileHandler(){
