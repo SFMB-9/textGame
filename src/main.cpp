@@ -30,9 +30,10 @@ void newGame(Slot slot){
     std::cout << "The beginning of a new adventure...";
     std::cout << "\nWhat is your name?\n> ";
     std::string name;
-    std::cin >> name;
+    std::cin.ignore();
+    std::getline(std::cin,name);
     std::cout << CLEAR_LAST;
-    //std::cout << CLEAR_LAST;
+    std::cout << CLEAR_LAST;
     std::cout << "Starring " << GREEN << name << RESET << "!";
     //Set name
     slot.setPlayerName(name);
