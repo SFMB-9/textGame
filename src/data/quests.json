@@ -1,0 +1,68 @@
+{
+    "quests": {
+        "quest0": {
+            "name": "intro",
+            "events": {
+                "introEvent": {
+                    "dialog": "Welcome, hero!"
+                },
+                "event1": {
+                    "prompt": {
+                        "text": "what is your name?",
+                        "string" : "playerName"
+                    }
+                },
+                "succeedEvent": {
+                    "dialog": "You did it!"
+                }
+            }
+        },
+        "quest1": {
+            "events": {
+                "introEvent": {
+                    "prompt": {
+                        "text": "Do you want to do this quest?",
+                        "options": [
+                            {
+                                "text": "Yes",
+                                "nextEvent": "succeedEvent"
+                            },
+                            {
+                                "text": "No",
+                                "nextEvent": "failEvent"
+                            }
+                        ]
+                    }
+                },
+                "succeedEvent": {
+                    "dialog": "You did it!"
+                }
+            }
+        },
+        "quest2": {
+            "name": "quest1",
+            "description": "quest1",
+            "flags": {
+                "hasName": true
+            },
+            "events": {
+                "introEvent": {
+                    "dialog1": "",
+                    "takeItem": []
+                },
+                "dialog2": "",
+                "giveItem": []
+            },
+            "succeedEvent": {},
+            "failEvent": {}
+        },
+        "quest4": {
+            "name": "The Apotheosis",
+            "description": "Turning into a god is a long and arduous process. You must first find the right place to start.",
+            "flags": {
+                "flag0": true,
+                "flag1": false
+            }
+        }
+    }
+}
