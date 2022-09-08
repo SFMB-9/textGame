@@ -1,27 +1,22 @@
 {
-    "savedata" : {
-        "player" : {
-            "name": "",
-            "hp": 0,
-            "maxHp": 0,
-            "location": "",
-            "inventory": []
+    "savedata": {
+        "data": false,
+        "gameStats": {
+            "completeQuests": 0,
+            "completionPercentage": 0,
+            "deaths": 0,
+            "failedQuests": 0,
+            "kills": 0,
+            "playTime": 0
         },
-        "story" : {
-            "quests": [],
-            "sidequests": []
+        "player": {
+            "inventory": null,
+            "location": "",
+            "name": "New game"
         },
         "settings": {
-            "textType" : false,
-            "coloredElements" : false
+            "slotColor": ""
         },
-        "gameStats": {
-            "playTime": 0,
-            "deaths": 0,
-            "kills": 0,
-            "completeQuests": 0,
-            "failedQuests": 0,
-            "completionPercentage": 0
-        }
+        "tag": 1
     }
 }
