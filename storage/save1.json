@@ -11,11 +11,11 @@
         },
         "player": {
             "inventory": null,
-            "location": "",
-            "name": "Sarah Lloyd"
+            "location": "none",
+            "name": "Paul Macaroon"
         },
         "settings": {
-            "slotColor": ""
+            "slotColor": "white"
         },
         "tag": 1
     }

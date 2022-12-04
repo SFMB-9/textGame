@@ -1,6 +1,6 @@
 {
     "savedata": {
-        "data": false,
+        "data": true,
         "gameStats": {
             "completeQuests": 0,
             "completionPercentage": 0,
@@ -12,11 +12,11 @@
         "player": {
             "inventory": null,
             "location": "none",
-            "name": "New game"
+            "name": "Mike Myers"
         },
         "settings": {
-            "slotColor": "white"
+            "slotColor": "default"
         },
-        "tag": 1
+        "tag": 3
     }
 }
