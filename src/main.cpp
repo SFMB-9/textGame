@@ -15,10 +15,21 @@
 
 using Json = nlohmann::json;
 
+std::string smartInput(std::string query, bool caseSensitive){
+    std::string input;
+    std::cout << NEWLINE << query;
+    std::cin >> input;
+    if(caseSensitive){
+        std::transform(input.begin(), input.end(), input.begin(), ::tolower);
+    }
+    return input;
+}
+
 void loadGame(Slot slot){
-    std::cout << "Press enter to continue...";
+    //std::cout << CLEAR;
+    std::cout << "GAME ESCAPED";
+    std::cout << "press enter to continue";
     std::cin.ignore();
-    std::cin.get();
 }
 
 /*New Game*/
@@ -37,22 +48,14 @@ void newGame(Slot slot){
     std::cout << "Starring " << GREEN << name << RESET << "!";
     //Set name
     slot.setPlayerName(name);
-    std::cout << "\nWould you like to save your progress?";
-    std::cout << "\n> ";
-    std::string save;
-    std::cin >> save;
+    std::string save = smartInput("Would you like to save your progress? (Yeahhh... no autosave.. Sorry)\n> ", true);
     if (save == "yes"||save == "y"||save == "1") {
         slot.save();
     }
-    std::cout << slot;
-    //std::cout << CLEAR;
-    //loadGame(slot)
-}
-
-void loadGame(Slot slot){
-    std::cout << "GAME EXITED";
-    std::cout << "press enter to continue";
-    std::cin.ignore();
+    std::cout << "Slot created!";
+    std::cout << NEWLINE << slot;
+    std::cin.get();
+    loadGame(slot);
 }
 
 int fileHandler(){
@@ -98,7 +101,7 @@ int fileHandler(){
         std::vector<std::string> slotBoxes;
         for(int i = 0; i < slots.size(); i++){
             std::stringstream st;
-            //std::cout << slots[i]; //Debug
+            std::cout << slots[i]; //Debug
             st << slots[i];
             slotBoxes.push_back(st.str());
         }
@@ -128,11 +131,8 @@ int fileHandler(){
             if (selectedSlot->savefile["savedata"]["data"]){
                 std::cout << "\nThis slot is already in use";
                     selectedSlot->print();
-                std::cout << "\nDo you want to overwrite it? (y/n)";
-                std::cout << "\n> ";
-                std::string choice;
-                std::cin >> choice;
-                if(choice == "y"){
+                std::string choice = smartInput("Do you want to overwrite it? (y/n)\n> ", true);
+                if(choice == "y"||choice == "yes"||choice == "1"){
                     std::cout << "\nOverwriting...";
 
                 } else {
@@ -140,19 +140,18 @@ int fileHandler(){
                     continue;
                 }
             }
-            selectedSlot->erase();; //Erase slot (potentially corrupted) tabula rasa
+            selectedSlot->erase(); //Erase slot (potentially corrupted) tabula rasa
             newGame(*selectedSlot);
         //Attempt load game
         } else {
             if (!selectedSlot->savefile["savedata"]["data"]){
                 std::cout << "\nThis slot is empty";
                 std::cout << "\nWould you like to start a new game? " << YELLOW << "(y/n)" << RESET;
-                std::cout << "\n> ";
-                std::string choice;
-                std::cin >> choice;
+                std::string choice = smartInput("\n> ", true);
                 if(choice == "y"){
                     std::cout << "\nStarting new game...";
                     selectedSlot->erase();
+                    newGame(*selectedSlot);
                     continue;
                 } else {
                     std::cout << "\nAborting...";
@@ -187,7 +186,7 @@ int main() {
     std::cin.get();
     bool play = true;
     while(play) {
-        //animatedLogo();
+        // animatedLogo();
         if(fileHandler() == -1) {
             play = false;
         }
