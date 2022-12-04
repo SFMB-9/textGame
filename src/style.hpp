@@ -61,7 +61,7 @@ std::string colorcode(std::string color) {
         return "\033[35m";
     } else if(color == "cyan") {
         return "\033[36m";
-    } else if(color == "white") {
+    } else if(color == "white"||color == "default"||color == "none"||color == "") {
         return "\033[37m";
     } else if(color == "black") {
         return "\033[30m";
