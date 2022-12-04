@@ -45,10 +45,10 @@ class Slot {
         void erase(){
             savefile["savedata"]["tag"] = tag;
             savefile["savedata"]["data"] = false;
-            savefile["savedata"]["player"]["name"] = "New game";
-            savefile["savedata"]["player"]["location"] = "";
+            savefile["savedata"]["player"]["name"] = "New Game";
+            savefile["savedata"]["player"]["location"] = "none";
             savefile["savedata"]["player"]["inventory"] = {};
-            savefile["savedata"]["settings"]["slotColor"] = "";
+            savefile["savedata"]["settings"]["slotColor"] = "default";
             savefile["savedata"]["gameStats"]["playTime"] = 0;
             savefile["savedata"]["gameStats"]["deaths"] = 0;
             savefile["savedata"]["gameStats"]["kills"] = 0;
