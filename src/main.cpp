@@ -9,6 +9,7 @@
 #include "inventory.hpp"
 #include "json.hpp"
 #include "player.hpp"
+#include "quest.hpp"
 #include "render.hpp"
 #include "slot.hpp"
 #include "style.hpp"
@@ -25,11 +26,28 @@ std::string smartInput(std::string query, bool caseSensitive){
     return input;
 }
 
+std::vector<Quest> buildQuestQueue(){
+    std::vector<Quest> questQueue;
+    std::ifstream questDataStream("data/quests.json");
+    Json questData;
+    questDataStream >> questData;
+    for (auto quest : questData["quests"]) {
+        questQueue.push_back(Quest(quest));
+    }
+    return questQueue;
+}
+
 void loadGame(Slot slot){
     //std::cout << CLEAR;
     std::cout << "GAME ESCAPED";
     std::cout << "press enter to continue";
-    std::cin.ignore();
+    std::cin.get();
+    std::vector<Quest> questQueue = buildQuestQueue();
+    // Iterate through quest queue and run each quest's events
+    for (auto quest : questQueue) {
+        std::cout << quest.getName() << NEWLINE;
+    }
+    std::cin.get();
 }
 
 /*New Game*/
@@ -37,25 +55,27 @@ void newGame(Slot slot){
     // TODO: Event Class...?
     // Cue music
     /*Intro*/
-    std::cout << CLEAR;
-    std::cout << "The beginning of a new adventure...";
-    std::cout << "\nWhat is your name?\n> ";
-    std::string name;
-    std::cin.ignore();
-    std::getline(std::cin,name);
-    std::cout << CLEAR_LAST;
-    std::cout << CLEAR_LAST;
-    std::cout << "Starring " << GREEN << name << RESET << "!";
-    //Set name
-    slot.setPlayerName(name);
-    std::string save = smartInput("Would you like to save your progress? (Yeahhh... no autosave.. Sorry)\n> ", true);
-    if (save == "yes"||save == "y"||save == "1") {
-        slot.save();
-    }
-    std::cout << "Slot created!";
-    std::cout << NEWLINE << slot;
+    //Build quest queue
     std::cin.get();
-    loadGame(slot);
+    // std::cout << CLEAR;
+    // std::cout << "The beginning of a new adventure...";
+    // std::cout << "\nWhat is your name?\n> ";
+    // std::string name;
+    // std::cin.ignore();
+    // std::getline(std::cin,name);
+    // std::cout << CLEAR_LAST;
+    // std::cout << CLEAR_LAST;
+    // std::cout << "Starring " << GREEN << name << RESET << "!";
+    // //Set name
+    // slot.setPlayerName(name);
+    // std::string save = smartInput("Would you like to save your progress? (Yeahhh... no autosave.. Sorry)\n> ", true);
+    // if (save == "yes"||save == "y"||save == "1") {
+    //     slot.save();
+    // }
+    // std::cout << "Slot created!";
+    // std::cout << NEWLINE << slot;
+    // std::cin.get();
+    // loadGame(slot);
 }
 
 int fileHandler(){
@@ -187,10 +207,18 @@ int main() {
     bool play = true;
     while(play) {
         // animatedLogo();
-        if(fileHandler() == -1) {
-            play = false;
+        // if(fileHandler() == -1) {
+        //     play = false;
+        // }
+        
+        std::vector<Quest> questQueue = buildQuestQueue();
+        // Iterate through quest queue and run each quest's events
+        for (auto quest : questQueue) {
+            quest.printForQuestLog();
         }
+        std::cin.get();
         std::cout <<"T h a n k s   f o r   p l a y i n g " << BOLD_RED << HEART << RESET;
+        play = false;
     }
 
     return 0;
