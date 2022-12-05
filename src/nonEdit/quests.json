@@ -1,0 +1,74 @@
+{
+    "quests": {
+        "IntroQuest": {
+            "name": "Intro",
+            "description": "Welcome to the game!",
+            "events": {
+                "event0": [
+                    {"terminal":"CLEAR"},
+                    {"dialog":"The beginning of a new adventure..."},
+                    {"prompt": { "query_str": "\nWhat is your name?\n> ", "ATT": "player_name" }},
+                    {"waiter" : "ENTER"},
+                    {"terminal": "CLEAR_LAST"},
+                    {"terminal": "CLEAR_LAST"},
+                    {"dialog_sp": ["Starring ", { "ATT": "player_name" , "style": "GREEN"}, "!"]},
+                    {"prompt": { "query_str": "Would you like to save your progress? (Yeahhh... no autosave.. Sorry)\n> ", "case_sensitive": true}},
+                    {"dialog": "Slot created!"},
+                    {"render": "slot"},
+                    {"waiter": "ENTER"}
+                ],
+                "introEvent": [
+                    {"dialog": "Welcome, hero!"}
+                ],
+                "event1": [
+                    {"prompt": { "query_str": "Would you like to start a new game?\n> ", "case_sensitive": true}}
+                ],
+                "succeedEvent": [
+                    {"dialog": "You did it!"}
+                ]
+            }
+        },
+        "quest1": {
+            "name": "quest1",
+            "description": "This is a quest",
+            "events": {
+                "introEvent": [
+                    {"prompt": { 
+                        "query_str": "Do you want to do this quest?", 
+                        "options": [ 
+                            {"text": "Yes","nextEvent": "succeedEvent"},
+                            {"text": "No","nextEvent": "failEvent"}
+                        ]
+                        }
+                    }
+                ],
+                "succeedEvent": {
+                    "dialog": "You did it!"
+                }
+            }
+        },
+        "quest2": {
+            "flags": {
+                "hasName": true
+            },
+            "events": {
+                "introEvent": {
+                    "dialog1": "",
+                    "takeItem": []
+                },
+                "dialog2": "",
+                "giveItem": []
+            },
+            "succeedEvent": {},
+            "failEvent": {}
+        },
+        "Apotheosis": {
+            "name": "The Apotheosis",
+            "description": "Turning into a god is a long and arduous process. You must first find the right place to start.",
+            "flags": {
+                "main_campaign_done": true,
+                "all_side_quests_done": true
+            }
+        }
+    }
+}
