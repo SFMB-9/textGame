@@ -1,8 +1,18 @@
 {
     "quests": {
-        "quest0": {
-            "name": "intro",
+        "IntroQuest": {
+            "name": "Intro",
+            "description": "Welcome to the game!",
             "events": {
+                "event0": [
+                    {"effect":"CLEAR"},
+                    {"dialog":"The beginning of a new adventure..."},
+                    {"prompt": { "query_str": "\nWhat is your name?\n> ", "ATT": "player_name" }},
+                    {"effect" : "ENTER"},
+                    {"effect": "CLEAR_LAST"},
+                    {"effect": "CLEAR_LAST"},
+                    {"dialog": ["Starring", { "ATT": "player_name" , "style": "GREEN"}]}
+                ],
                 "introEvent": {
                     "dialog": "Welcome, hero!"
                 },
@@ -18,6 +28,8 @@
             }
         },
         "quest1": {
+            "name": "quest1",
+            "description": "This is a quest",
             "events": {
                 "introEvent": {
                     "prompt": {
@@ -40,8 +52,6 @@
             }
         },
         "quest2": {
-            "name": "quest1",
-            "description": "quest1",
             "flags": {
                 "hasName": true
             },
@@ -56,12 +66,12 @@
             "succeedEvent": {},
             "failEvent": {}
         },
-        "quest4": {
+        "Apotheosis": {
             "name": "The Apotheosis",
             "description": "Turning into a god is a long and arduous process. You must first find the right place to start.",
             "flags": {
-                "flag0": true,
-                "flag1": false
+                "main_campaign_done": true,
+                "all_side_quests_done": true
             }
         }
     }
