@@ -26,13 +26,14 @@ std::string smartInput(std::string query, bool caseSensitive){
     return input;
 }
 
-std::vector<Quest> buildQuestQueue(){
+std::vector<Quest> buildQuestQueue(Slot slot){
     std::vector<Quest> questQueue;
     std::ifstream questDataStream("data/quests.json");
     Json questData;
     questDataStream >> questData;
-    for (auto quest : questData["quests"]) {
-        questQueue.push_back(Quest(quest));
+    for (Json quest : questData) {
+        std::cout << "Building quest: " << quest["name"] << std::endl;
+        std::cin.get();
     }
     return questQueue;
 }
@@ -42,12 +43,13 @@ void loadGame(Slot slot){
     std::cout << "GAME ESCAPED";
     std::cout << "press enter to continue";
     std::cin.get();
-    std::vector<Quest> questQueue = buildQuestQueue();
+    //Build quest queue
+    std::vector<Quest> questQueue = buildQuestQueue(slot);
     // Iterate through quest queue and run each quest's events
     for (auto quest : questQueue) {
-        std::cout << quest.getName() << NEWLINE;
+        quest.run();
+        // quest.printForQuestLog();
     }
-    std::cin.get();
 }
 
 /*New Game*/
@@ -55,7 +57,6 @@ void newGame(Slot slot){
     // TODO: Event Class...?
     // Cue music
     /*Intro*/
-    //Build quest queue
     std::cin.get();
     // std::cout << CLEAR;
     // std::cout << "The beginning of a new adventure...";
@@ -75,7 +76,7 @@ void newGame(Slot slot){
     // std::cout << "Slot created!";
     // std::cout << NEWLINE << slot;
     // std::cin.get();
-    // loadGame(slot);
+    loadGame(slot);
 }
 
 int fileHandler(){
@@ -121,7 +122,7 @@ int fileHandler(){
         std::vector<std::string> slotBoxes;
         for(int i = 0; i < slots.size(); i++){
             std::stringstream st;
-            std::cout << slots[i]; //Debug
+            // std::cout << slots[i]; //Debug
             st << slots[i];
             slotBoxes.push_back(st.str());
         }
@@ -207,14 +208,8 @@ int main() {
     bool play = true;
     while(play) {
         // animatedLogo();
-        // if(fileHandler() == -1) {
-        //     play = false;
-        // }
-        
-        std::vector<Quest> questQueue = buildQuestQueue();
-        // Iterate through quest queue and run each quest's events
-        for (auto quest : questQueue) {
-            quest.printForQuestLog();
+        if(fileHandler() == -1) {
+            play = false;
         }
         std::cin.get();
         std::cout <<"T h a n k s   f o r   p l a y i n g " << BOLD_RED << HEART << RESET;
