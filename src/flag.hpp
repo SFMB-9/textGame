@@ -2,14 +2,17 @@
 #define _FLAG_HPP_
 
 #include <string>
+
+#include "json.hpp"
+
 class Flag {
     public:
         Flag(std::string name, std::string desc);
-        Flag(Json json) {
-            name = json["name"];
-            desc = json["desc"];
-            isComplete = json["isComplete"];
-        }
+        // Flag(Json json) {
+        //     name = json["name"];
+        //     desc = json["desc"];
+        //     isComplete = json["isComplete"];
+        // }
         std::string name;
         std::string desc;
         bool isComplete;
