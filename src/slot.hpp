@@ -13,7 +13,10 @@ using json = nlohmann::json;
 class Slot {
     public:
         /*Constructors*/
-        Slot(std::string slot_path){ 
+        Slot(){
+            Slot("../storage/save0.json");
+        }
+        Slot(std::string slot_path){
             std::ifstream savefile_stream(slot_path);
             savefile_stream >> savefile;
             data = savefile["savedata"]["data"];
